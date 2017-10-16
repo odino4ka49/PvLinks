@@ -8,8 +8,8 @@ def index(request):
 
 
 def getPvData(request):
-    nodes = getDataFile("nodes.json")[:2000]
-    links = getDataFile("links.json")[:3000]
+    nodes = getDataFile("nodes.json")[:1988]
+    links = getDataFile("links.json")[:3815]
     list = {"nodes": nodes, "links": links}
     return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
 
