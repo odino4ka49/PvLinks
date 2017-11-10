@@ -1,8 +1,21 @@
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
+.list {
+    font-family:sans-serif;
+    font-size: 14px;
+    padding: 0px;
 }
 
-.nodes circle {
-  stroke: #fff;
+li {
+    border: solid 2px lightblue;
+    padding: 0px 10px;
+    margin: 10px;
+    list-style-type: none;
+}
+
+li h3{
+    margin: 10px;
+}
+
+.search{
+    border: solid lightblue;
+    margin: 0px 10px;
 }

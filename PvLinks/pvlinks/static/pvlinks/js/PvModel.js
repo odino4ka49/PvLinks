@@ -7,6 +7,11 @@ PVLINKS.PvModel = function(){
             return result;
         },
 
+        getIocNodes = function(){
+            var result = nodes.filter(function(node){return node.type=="ioc";});//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
+            return result;
+        },
+
         getPvLinks = function(){
             var result = links;//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
             return result;
@@ -36,6 +41,7 @@ PVLINKS.PvModel = function(){
 
     return {
         getPvNodes: getPvNodes,
+        getIocNodes: getIocNodes,
         getPvLinks: getPvLinks
     };
 }

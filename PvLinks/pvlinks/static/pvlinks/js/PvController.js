@@ -5,7 +5,7 @@ PVLINKS.PvController = function(model,view){
 
 
     $(document).on("pvdata_loaded",function(event){
-        view.setGraph();
+        view.setList();
     });
 
     return{

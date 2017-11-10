@@ -27,7 +27,7 @@ $(document).on("unset_loading_cursor",function(){
 });
 $(document).ready(function(){
     var model = PVLINKS.PvModel(),
-        view = PVLINKS.PvGraph(model,{
+        view = PVLINKS.IocList(model,{
             "body": d3.select("body")
         });
         controller = PVLINKS.PvController(model,view);

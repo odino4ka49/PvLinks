@@ -30,18 +30,13 @@ PVLINKS.PvGraph = function(model,body){
             .enter()
             .append("circle")
             .attr("r", 5)
-            .attr("fill", function(d) {return "black"})
-            .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended));
+            .attr("fill", function(d) {return "black"});
 
         node.append("title")
             .text(function(d) {return d.id;});
 
         simulation
-            .nodes(nodes)
-            .on("tick", ticked);
+            .nodes(nodes);
 
         simulation.force("link")
             .links(links);
