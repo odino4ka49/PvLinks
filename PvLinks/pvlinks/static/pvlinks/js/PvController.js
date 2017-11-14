@@ -4,9 +4,12 @@ PVLINKS.PvController = function(model,view){
         pv_model = model;
 
 
-    $(document).on("pvdata_loaded",function(event){
+    $(document).on("ioc_loaded",function(event){
+        view.setLi();
         view.setList();
     });
+
+    pv_model.loadIocNodes();
 
     return{
 

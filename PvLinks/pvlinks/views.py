@@ -14,6 +14,12 @@ def getPvData(request):
     return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
 
 
+def getIoc(request):
+    nodes = getDataFile("nodes.json")
+    list = [elem for elem in nodes if elem["type"]=="ioc"]
+    return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
+
+
 def getDataFile(name):
     with open(os.path.dirname(os.path.abspath(__file__))+'/data/'+name) as data_file:
         data = json.load(data_file)

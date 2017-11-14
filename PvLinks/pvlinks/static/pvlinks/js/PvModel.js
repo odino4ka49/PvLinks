@@ -18,28 +18,46 @@ PVLINKS.PvModel = function(){
         };
 
     function loadPvData(){
-            $(document).trigger("set_loading_cursor");
-            $.ajax({
-                type: "GET",
-                url: PVLINKS.serveradr()+"pvlinks/getPvData",
-                error: function(xhr, ajaxOptions, thrownError) {
-                    $(document).trigger("unset_loading_cursor");
-                    $(document).trigger("error_message",thrownError);
-                },
-                success: function(data){
-                    nodes = data["nodes"];
-                    links = data["links"];
-                    $(document).trigger("unset_loading_cursor");
-                    $(document).trigger("pvdata_loaded");
-                }
-            });
-        };
+        $(document).trigger("set_loading_cursor");
+        $.ajax({
+            type: "GET",
+            url: PVLINKS.serveradr()+"pvlinks/getPvData",
+            error: function(xhr, ajaxOptions, thrownError) {
+                $(document).trigger("unset_loading_cursor");
+                $(document).trigger("error_message",thrownError);
+            },
+            success: function(data){
+                nodes = data["nodes"];
+                links = data["links"];
+                $(document).trigger("unset_loading_cursor");
+                $(document).trigger("pvdata_loaded");
+            }
+        });
+    };
+
+    function loadIocNodes(){
+        $(document).trigger("set_loading_cursor");
+        $.ajax({
+            type: "GET",
+            url: PVLINKS.serveradr()+"pvlinks/getIoc",
+            error: function(xhr, ajaxOptions, thrownError) {
+                $(document).trigger("unset_loading_cursor");
+                $(document).trigger("error_message",thrownError);
+            },
+            success: function(data){
+                nodes = data;
+                console.log(data);
+                $(document).trigger("unset_loading_cursor");
+                $(document).trigger("ioc_loaded");
+            }
+        });
+    };
 
 
-    loadPvData();
 
 
     return {
+        loadIocNodes: loadIocNodes,
         getPvNodes: getPvNodes,
         getIocNodes: getIocNodes,
         getPvLinks: getPvLinks
