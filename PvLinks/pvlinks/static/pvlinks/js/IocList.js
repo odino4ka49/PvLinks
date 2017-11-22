@@ -18,6 +18,7 @@ PVLINKS.IocList = function(model,body){
             .append("li")
             .on("click", function(node){
                 d3.select(this).classed("selected", "true");
+                window.location.href = PVLINKS.serveradr()+"pvlinks/pvlist/"+node.id;
             })
             .append("h3")
             .text(function(node){

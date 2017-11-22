@@ -4,12 +4,20 @@ PVLINKS.PvController = function(model,view){
         pv_model = model;
 
 
-    $(document).on("ioc_loaded",function(event){
+    function getIocId(){
+        var pathname = location.pathname;
+        var path = pathname.split('/');
+        if(path[1]=="pvlinks"&&path[2]=="pvlist"){
+            return path[3]
+        }
+    };
+
+    $(document).on("iocinfo_loaded",function(event){
         view.setLi();
         view.setList();
     });
 
-    pv_model.loadIocNodes();
+    pv_model.loadIocInfo(getIocId());
 
     return{
 

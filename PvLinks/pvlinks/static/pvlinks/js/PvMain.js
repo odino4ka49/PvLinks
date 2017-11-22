@@ -1,5 +1,4 @@
 var PVLINKS = PVLINKS||{};
-//создание пространства имен
 PVLINKS.namespace = function (ns_string) {
     var parts = ns_string.split('.'),
         parent = PVLINKS,
@@ -27,7 +26,7 @@ $(document).on("unset_loading_cursor",function(){
 });
 $(document).ready(function(){
     var model = PVLINKS.PvModel(),
-        view = PVLINKS.IocList(model,{
+        view = PVLINKS.PvView(model,{
             "body": d3.select("body")
         });
         controller = PVLINKS.PvController(model,view);
