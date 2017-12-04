@@ -40,3 +40,12 @@ li.selected{
     border: solid lightblue;
     margin: 0px 10px;
 }
+
+svg{
+    position: absolute;
+    top: 20px;
+    left: 355px;
+    width: 50%;
+    border: solid 2px lightblue;
+    height: 93%;
+}

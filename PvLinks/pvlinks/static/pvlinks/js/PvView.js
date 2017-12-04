@@ -1,7 +1,8 @@
 PVLINKS.namespace("PVLINKS.PvView");
 PVLINKS.PvView = function(model,body){
     var model = model,
-        ioclist;
+        ioclist,
+        pvconnect;
 
     var options_ioc = {
         valueNames: ["id"]
@@ -38,6 +39,7 @@ PVLINKS.PvView = function(model,body){
             .on("click", function(node){
                 d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
                 d3.select(this).classed("selected", "true");
+                pvconnect.setIoc2(node);
             })
             .append("h3")
             .text(function(node){
@@ -51,9 +53,15 @@ PVLINKS.PvView = function(model,body){
         var pvlist = new List('pvlist',options_pv);
     };
 
+    function setPvConnect(ioc){
+        pvconnect = PVLINKS.PvConnect(model,body);
+        pvconnect.setIoc1(ioc);
+    };
+
     return{
         setLi: setLi,
-        setList: setList
+        setList: setList,
+        setPvConnect: setPvConnect
     };
 };
 

@@ -1,7 +1,8 @@
 PVLINKS.namespace("PVLINKS.PvController");
 PVLINKS.PvController = function(model,view){
     var pv_view = view,
-        pv_model = model;
+        pv_model = model,
+        ioc;
 
 
     function getIocId(){
@@ -15,9 +16,11 @@ PVLINKS.PvController = function(model,view){
     $(document).on("iocinfo_loaded",function(event){
         view.setLi();
         view.setList();
+        view.setPvConnect(ioc);
     });
 
-    pv_model.loadIocInfo(getIocId());
+    ioc = getIocId();
+    pv_model.loadIocInfo(ioc);
 
     return{
 
