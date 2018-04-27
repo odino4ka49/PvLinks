@@ -16,7 +16,7 @@ PVLINKS.PvController = function(model,view){
     $(document).on("iocinfo_loaded",function(event){
         view.setLi();
         view.setList();
-        view.setPvConnect(ioc);
+        //view.setPvConnect(ioc);
     });
 
     ioc = getIocId();

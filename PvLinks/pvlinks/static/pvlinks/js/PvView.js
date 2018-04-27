@@ -2,7 +2,8 @@ PVLINKS.namespace("PVLINKS.PvView");
 PVLINKS.PvView = function(model,body){
     var model = model,
         ioclist,
-        pvconnect;
+        pvconnect,
+	pvLinked;
 
     var options_ioc = {
         valueNames: ["id"]
@@ -24,6 +25,7 @@ PVLINKS.PvView = function(model,body){
             .on("click", function(node){
                 d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
                 d3.select(this).classed("selected", true);
+		loadPvLinksByPv(node.id);
             })
             .append("h3")
             .text(function(node){
@@ -39,13 +41,48 @@ PVLINKS.PvView = function(model,body){
             .on("click", function(node){
                 d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
                 d3.select(this).classed("selected", "true");
-                pvconnect.setIoc2(node);
+		loadPvLinksByIoc(node.id);
             })
             .append("h3")
             .text(function(node){
                 return node.id;
             })
             .attr("class", "id");
+    };
+
+    function loadPvLinksByPv(id){
+        pvLinked = model.getConnectedPv(id);
+	displayPvLinks();
+    };
+
+    function loadPvLinksByIoc(id){
+        pvLinked = model.getPvFromIoc(id);
+	displayPvLinks();
+    };
+
+    function displayPvLinks(){
+	var pvlist = d3.select("#pvlist2").select("ul")
+            .selectAll("li")
+            .data(pvLinked);
+
+	pvlist.select("h3")
+            .text(function(node){
+                return node;
+            });
+            
+	pvlist.enter()
+            .append("li")
+            .on("click", function(node){
+                d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
+                d3.select(this).classed("selected", true);
+            })
+            .append("h3")
+            .text(function(node){
+                return node;
+            });
+
+	pvlist.exit().remove();
+            //.attr("class", "id");
     };
 
     function setList(source){

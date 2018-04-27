@@ -23,11 +23,21 @@ li.selected{
     width: 300px;
 }
 
+#pvlist2 ul li{
+    width: 300px;
+}
+
 #ioclist ul li{
     width: 120px;
 }
 #connected_ioc ul li{
     width: 120px;
+}
+
+#pvlist2{
+    right: 200px;
+    position: absolute;
+    top: 10px;
 }
 
 #connected_ioc{

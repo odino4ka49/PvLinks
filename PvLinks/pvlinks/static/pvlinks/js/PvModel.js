@@ -1,6 +1,6 @@
 PVLINKS.namespace("PVLINKS.PvModel");
 PVLINKS.PvModel = function(){
-    var nodes, links, iocinfo;
+    var iocinfo;
 
         getPvNodes = function(){
             var result = nodes;//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
@@ -17,10 +17,27 @@ PVLINKS.PvModel = function(){
             return result;
         },
 
-        getPvLinks = function(){
-            var result = links;//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
-            return result;
-        };
+        getConnectedPv = function(id){
+	    var pvnames = [], pvs = [];
+	    iocinfo["pv_links"].forEach(function(link){
+		if (link.source==id){
+		    pvnames.push(link.target);
+		}else if(link.target==id){
+		    pvnames.push(link.source);
+		}
+	    });
+	    return pvnames;
+        },
+
+	getPvFromIoc = function(id){
+	    var pvnames = [], pvs = [];
+	    iocinfo["ioc_links"].forEach(function(link){
+		if (link.source==id){
+		    pvnames.push(link.target);
+		}
+	    });
+	    return pvnames;
+	};
 
     function loadPvData(){
         $(document).trigger("set_loading_cursor");
@@ -86,6 +103,7 @@ PVLINKS.PvModel = function(){
         getIocInfo: getIocInfo,
         getPvNodes: getPvNodes,
         getIocNodes: getIocNodes,
-        getPvLinks: getPvLinks
+        getConnectedPv: getConnectedPv,
+	getPvFromIoc: getPvFromIoc
     };
 }
