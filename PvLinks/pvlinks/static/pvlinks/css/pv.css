@@ -46,7 +46,7 @@ li.selected{
     top: 10px;
 }
 
-.search{
+.fuzzy-search{
     border: solid lightblue;
     margin: 0px 10px;
 }

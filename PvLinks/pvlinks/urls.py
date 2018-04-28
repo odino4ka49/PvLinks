@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^getIoc', views.getIoc, name='ioc-data'),
     url(r'^getInfoIoc', views.getInfoIoc, name='ioc-info'),
     url(r'^pvlist/(?P<id>[-@\w]+)$', 'pvlinks.views.pvlist', name="index-pvlist"),
+    #url(r'^graph/(?P<id>[-@\w]+)$', 'pvlinks.views.graph', name="index-graph"),
 ]
 

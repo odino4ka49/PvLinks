@@ -3,7 +3,7 @@ PVLINKS.PvView = function(model,body){
     var model = model,
         ioclist,
         pvconnect,
-	pvLinked;
+	    pvLinked;
 
     var options_ioc = {
         valueNames: ["id"]
@@ -12,7 +12,6 @@ PVLINKS.PvView = function(model,body){
     var options_pv = {
         valueNames: ["id","rectype"]
     };
-
 
     function setLi(){
         var iocinfo = model.getIocInfo();
@@ -23,9 +22,14 @@ PVLINKS.PvView = function(model,body){
             .enter()
             .append("li")
             .on("click", function(node){
-                d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
-                d3.select(this).classed("selected", true);
-		loadPvLinksByPv(node.id);
+                if(!d3.select(this).classed("selected")){
+                    d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
+                    d3.select(this).classed("selected", true);
+                    loadPvLinksByPv(node.id);
+                }
+                else {
+                    d3.select(this).classed("selected", false);
+                }
             })
             .append("h3")
             .text(function(node){
@@ -39,9 +43,14 @@ PVLINKS.PvView = function(model,body){
             .enter()
             .append("li")
             .on("click", function(node){
-                d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
-                d3.select(this).classed("selected", "true");
-		loadPvLinksByIoc(node.id);
+                if(!d3.select(this).classed("selected")){
+                    d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
+                    d3.select(this).classed("selected", "true");
+                    loadPvLinksByIoc(node.id);
+                }
+                else {
+                    d3.select(this).classed("selected", false);
+                }
             })
             .append("h3")
             .text(function(node){
@@ -52,37 +61,55 @@ PVLINKS.PvView = function(model,body){
 
     function loadPvLinksByPv(id){
         pvLinked = model.getConnectedPv(id);
-	displayPvLinks();
+	    displayPvLinks();
     };
 
     function loadPvLinksByIoc(id){
         pvLinked = model.getPvFromIoc(id);
-	displayPvLinks();
+	    displayPvLinks();
+    };
+
+    function filterPvs(id){
+        var pvfilter = model.getConnectedPv(id);
+        $("#pvlist").filter(function(item) {
+            return pvfilter.includes(item);
+        });
+    };
+
+    function filterIocs(id){
+
     };
 
     function displayPvLinks(){
-	var pvlist = d3.select("#pvlist2").select("ul")
+        var pvlist = d3.select("#pvlist2").select("ul")
             .selectAll("li")
             .data(pvLinked);
 
-	pvlist.select("h3")
+        pvlist.select("h3")
             .text(function(node){
                 return node;
             });
-            
-	pvlist.enter()
+
+        pvlist.enter()
             .append("li")
             .on("click", function(node){
-                d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
-                d3.select(this).classed("selected", true);
+                if(!d3.select(this).classed("selected")){
+                    d3.select(this.parentNode).selectAll("li.selected").classed("selected",false);
+                    d3.select(this).classed("selected", true);
+                    filterPvs(node.id);
+                    filterIocs(node.id);
+                }
+                else {
+                    d3.select(this).classed("selected", false);
+                }
             })
             .append("h3")
             .text(function(node){
                 return node;
             });
 
-	pvlist.exit().remove();
-            //.attr("class", "id");
+        pvlist.exit().remove();
+                //.attr("class", "id");
     };
 
     function setList(source){
