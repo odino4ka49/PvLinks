@@ -28,7 +28,7 @@ li.selected{
 }
 
 #ioclist ul li{
-    width: 120px;
+    width: 150px;
 }
 #connected_ioc ul li{
     width: 120px;
@@ -49,6 +49,31 @@ li.selected{
 .fuzzy-search{
     border: solid lightblue;
     margin: 0px 10px;
+}
+
+.inline{
+    display: inline-table;
+}
+
+.hidden{
+    display:none;
+}
+
+input[type=button] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family:sans-serif;
+}
+
+input[type=button].highlight {
+    background-color: white;
+    color: #4CAF50;
 }
 
 svg{

@@ -7,16 +7,36 @@
     <title></title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="/static/pvlinks/js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="/static/pvlinks/js/IocMain.js"></script>
-    <script type="text/javascript" src="/static/pvlinks/js/IocList.js"></script>
-    <script type="text/javascript" src="/static/pvlinks/js/IocController.js"></script>
+    <script type="text/javascript" src="/static/pvlinks/js/Main.js"></script>
+    <script type="text/javascript" src="/static/pvlinks/js/PvLists.js"></script>
     <script type="text/javascript" src="/static/pvlinks/js/PvModel.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/pvlinks/css/pv.css" >
 </head>
 <body>
-    <div id="ioclist">
-        <input type="text" class="fuzzy-search" />
+    <div id="navigation">
+        <input type="button" value="ioc">
+        <input type="button" value="pv">
+        <input type="button" value="pc">
+    </div>
+    <div id="pclist" class="hidden inline">
+        <input type="text" class="fuzzy-search"/>
+        <ul class="list"></ul>
+    </div>
+    <div id="ioclist" class="hidden inline">
+        <input type="text" class="fuzzy-search"/>
+        <ul class="list">
+        </ul>
+    </div>
+    <div id="pvlist" class="hidden inline">
+        <input type="text" class="fuzzy-search"/>
+        <ul class="list"></ul>
+    </div>
+    <div id="pvlist2" class="hidden inline">
+        <input type="text" class="fuzzy-search"/>
+        <ul class="list"></ul>
+    </div>
+    <div id="pv" class="hidden inline">
         <ul class="list"></ul>
     </div>
 </body>

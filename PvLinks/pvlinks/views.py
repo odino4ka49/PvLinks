@@ -13,19 +13,51 @@ def pvlist(request,id=None):
     return HttpResponse(template.render())
 
 
-def getPvData(request):
+def getAllData(request):
     nodes = getDataFile("nodes.json")
     links = getDataFile("links.json")
     list = {"nodes": nodes, "links": links}
     return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
 
+def getAllPv(request):
+    nodes = getDataFile("nodes.json")
+    list = [elem for elem in nodes if elem["type"]=="pv"]
+    return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
 
 def getIoc(request):
-    print "getioc"
     nodes = getDataFile("nodes.json")
     list = [elem for elem in nodes if elem["type"]=="ioc"]
     return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
 
+def getPvByPv(request):
+    try:
+        data = request.GET
+        pv_name = data['pv']
+        nodes = getDataFile("nodes.json")
+        links = getDataFile("links.json")
+        pv_names = []
+        for elem in links:
+            if elem["type"] == "ref":
+                if elem["source"] == pv_name:
+                    pv_names.append(elem["target"])
+                elif elem["target"] == pv_name:
+                    pv_names.append(elem["source"])
+        list = [elem for elem in nodes if elem["type"]=="pv" and elem["id"] in pv_names]
+    except Exception as e:
+        print e
+    return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
+
+def getPvByIoc(request):
+    try:
+        data = request.GET
+        ioc_name = data['ioc']
+        nodes = getDataFile("nodes.json")
+        links = getDataFile("links.json")
+        pv_names = [elem['target'] for elem in links if elem["type"]=="has" and elem["source"]==ioc_name]
+        list = [elem for elem in nodes if elem["type"]=="pv" and elem["id"] in pv_names]
+    except Exception as e:
+        print e
+    return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
 
 def getInfoIoc(request):
     data = request.GET
