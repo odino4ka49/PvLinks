@@ -34,6 +34,10 @@ li.selected{
     width: 120px;
 }*/
 
+li.selected{
+    background-color: lightgreen;
+}
+
 #pvlist2{
     right: 200px;
     position: absolute;

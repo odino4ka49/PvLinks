@@ -1,24 +1,13 @@
 PVLINKS.namespace("PVLINKS.PvModel");
 PVLINKS.PvModel = function(){
     var iocinfo,
-        iocnodes,
-        pvnodes,
-        pvnodes2,
         nodes,
         links,
+        nodelist = {},
 
-        getPvNodes2 = function(){
-            var result = pvnodes2;//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
-            return result;
-        },
 
-        getPvNodes = function(){
-            var result = pvnodes;//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
-            return result;
-        },
-
-        getIocNodes = function(){
-            var result = iocnodes;//.filter(function(node){return node.type=="ioc";});//(tree_data===undefined)? undefined: jQuery.extend(true,{},tree_data);
+        getNodes = function(listname){
+            var result = nodelist[listname];
             return result;
         },
 
@@ -77,7 +66,7 @@ PVLINKS.PvModel = function(){
                 $(document).trigger("error_message",thrownError);
             },
             success: function(data){
-                iocnodes = data;
+                nodelist["ioc"] = data;
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("ioc_loaded");
             }
@@ -94,7 +83,7 @@ PVLINKS.PvModel = function(){
                 $(document).trigger("error_message",thrownError);
             },
             success: function(data){
-                pvnodes = data;
+                nodelist["pv"] = data;
                 console.log("loaded")
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("pv_loaded");
@@ -113,9 +102,10 @@ PVLINKS.PvModel = function(){
                 $(document).trigger("error_message",thrownError);
             },
             success: function(data){
-                pvnodes2 = data;
+                nodelist["iocpv"] = data;
+                console.log(data);
                 $(document).trigger("unset_loading_cursor");
-                $(document).trigger("pv2_loaded");
+                $(document).trigger("iocpv_loaded");
             }
         });
     };
@@ -131,7 +121,7 @@ PVLINKS.PvModel = function(){
                 $(document).trigger("error_message",thrownError);
             },
             success: function(data){
-                pvnodes2 = data;
+                nodelist["pv2"] = data;
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("pv2_loaded");
             }
@@ -164,9 +154,7 @@ PVLINKS.PvModel = function(){
         loadPvByIoc: loadPvByIoc,
         loadPvByPv: loadPvByPv,
         getIocInfo: getIocInfo,
-        getPvNodes: getPvNodes,
-        getPvNodes2: getPvNodes2,
-        getIocNodes: getIocNodes,
+        getNodes: getNodes,
         getConnectedPv: getConnectedPv,
 	    getPvFromIoc: getPvFromIoc
     };

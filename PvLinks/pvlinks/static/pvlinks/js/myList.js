@@ -1,21 +1,21 @@
 PVLINKS.namespace("PVLINKS.myList");
-PVLINKS.myList = function(model,div){
+PVLINKS.myList = function(model,div,listname,additionalFunction){
     var model = model,
         div = div,
         searchline,
         list,
-        d3list,
-        d3li,
         data,
         showdata,
-        clusterize;
+        clusterize,
+        listname = listname,
+        additionalFunction = additionalFunction;
 
 
     function initClusterList(lidata){
         clusterize = new Clusterize({
             rows: lidata,
-            scrollId: 'scrollArea',
-            contentId: 'contentArea'
+            scrollId: listname+'scrollArea',
+            contentId: listname+'contentArea'
         })
     };
 
@@ -27,33 +27,31 @@ PVLINKS.myList = function(model,div){
         searchline = document.createElement("input"),
         list = document.createElement("div");
         list.className = "clusterize-scroll";
-        list.setAttribute("id", "scrollArea");
-        list.innerHTML = '<ul id="contentArea" class="clusterize-content"><li class="clusterize-no-data">Loading data…</li></ul>';
+        list.setAttribute("id", listname+"scrollArea");
+        list.innerHTML = '<ul id="'+listname+'contentArea" class="clusterize-content"><li class="clusterize-no-data">Loading data…</li></ul>';
         div.append(searchline,list);
         if(showdata){
-            var lidata = dataToLi(showdata);
-            initClusterList(lidata);
+            initClusterList(dataToLi(showdata));
         }
         $(searchline).on("input",checkInput);
         list.onclick = function(e){
             e = e || event;
+            e.stopPropagation();
+            e.preventDefault();
             var target = e.target || e.srcElement;
-            console.log(target);
             if(!$(target).hasClass("selected")){
                 $(list).children("ul").children("li").removeClass("selected");
                 $(target).addClass("selected");
-                var pv_id = $(target).text();
-                model.loadPvByPv(pv_id);
             }
             else {
                 $(target).removeClass("selected");
-                $(document).trigger("clearlist","pvlist2");
             }
+            additionalFunction(listname,target);
         }
     };
 
     function dataToLi(startdata){
-        lidata = [];
+        var lidata = [];
         startdata.forEach(function(item){
             lidata.push('<li>'+item.id+'</li>');
         })
@@ -61,15 +59,14 @@ PVLINKS.myList = function(model,div){
     };
 
     function init(){
-        data = model.getPvNodes();
+        data = [];
         showdata = data;
         initHtml();
     };
 
     function filter(text){
         var regexp = RegExp(text)
-        console.log(regexp)
-        showdata = data.filter(pv => regexp.test(pv.id))
+        showdata = data.filter(element => regexp.test(element.id))
         updateClusterList(dataToLi(showdata));
     };
 
@@ -80,16 +77,29 @@ PVLINKS.myList = function(model,div){
 
 
     function setInput(text){
+        console.log(text)
         $(searchline).val(text);
         checkInput();
+    }
+
+
+    function selectFirst(){
+        var element = $(list).children("ul").children("li:first-child");
+        element.trigger("click");
+    }
+
+
+    function clear(){
+        showdata = [];
+        updateClusterList(dataToLi(showdata));
     }
 
 
     init();
 
 
-    $(document).on("pv_loaded",function(event){
-        data = model.getPvNodes();
+    $(document).on(listname+"_loaded",function(event){
+        data = model.getNodes(listname);
         if(!showdata){
             initClusterList(dataToLi(data));
         }
@@ -102,6 +112,8 @@ PVLINKS.myList = function(model,div){
 
 
     return {
-        setInput: setInput
+        setInput: setInput,
+        selectFirst: selectFirst,
+        clear: clear
     };
 };
