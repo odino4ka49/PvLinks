@@ -8,19 +8,19 @@ PVLINKS.PvLists = function(model,body){
         lists = {};
 
     function selectPv(pv_id){
-        $("#pvlist input").val(pv_id);
+        /*$("#pvlist input").val(pv_id);
+        lists["pvlist"].search(pv_id);
+        $("#pvlist").children("ul").children("li").trigger("click");*/
+        lists["pvlist"].setInput(pv_id);
         hideList(["ioclist","pclist"]);
-        /*if(pvnodes==undefined){
-            initSearch([{"id":pv_id}],"pvlist",null);
-            pvbutton.trigger("click");
-        }
-        else */if(! pvbutton.hasClass("highlight")){
+        if(! pvbutton.hasClass("highlight")){
             $("#pvlist").removeClass("hidden");
             pvbutton.siblings().removeClass("highlight");
             pvbutton.addClass("highlight");
         }
-        lists["pvlist"].search(pv_id);
-        $("#pvlist").children("ul").children("li").trigger("click");
+        if(lists["pvlist2"]){
+            lists["pvlist2"].clear();
+        }
     };
 
     function additionalFunctions(listname){
@@ -37,7 +37,6 @@ PVLINKS.PvLists = function(model,body){
             });
         }
         else if(listname == "pvlist"){
-            console.log(lis)
             lis.click(function(event){
                 if($(this).hasClass("selected")){
                     var pv_id = $(this).children("h3").text();
@@ -68,6 +67,9 @@ PVLINKS.PvLists = function(model,body){
         };
         if (lists[listname]) {
             if(actions!="add"){
+                if(lists["pvlist2"]){
+                    lists["pvlist2"].clear();
+                }
                 lists[listname] = new List(listname,options).clear();
             }
             lists[listname].add(list);
@@ -83,9 +85,6 @@ PVLINKS.PvLists = function(model,body){
             }
             else{
                 $(this).removeClass("selected");
-                /*if($(this).siblings().length==0){
-                    lists[listname].search();
-                }*/
             }
         });
         additionalFunctions(listname);
@@ -125,6 +124,7 @@ PVLINKS.PvLists = function(model,body){
     $(document).ready(function(){
         initMenu();
         model.loadAllPvNodes();
+        lists["pvlist"] = PVLINKS.myList(model,$("#pvlist"));
     });
 
     $(document).on("ioc_loaded",function(event){
@@ -135,7 +135,7 @@ PVLINKS.PvLists = function(model,body){
 
     $(document).on("pv_loaded",function(event){
         pvnodes = model.getPvNodes();
-        initSearch(pvnodes,"pvlist",null);
+        //initSearch(pvnodes,"pvlist",null);
     });
 
     $(document).on("pv2_loaded",function(event){
@@ -143,6 +143,10 @@ PVLINKS.PvLists = function(model,body){
         showList(["pvlist2"]);
         initSearch(pvnodes2,"pvlist2",null);
     });
+
+    $(document).on("clearlist",function(event,listname){
+        lists[listname].clear();
+    })
 
     return{
 

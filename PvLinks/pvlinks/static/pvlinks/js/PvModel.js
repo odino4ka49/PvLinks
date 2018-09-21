@@ -95,6 +95,7 @@ PVLINKS.PvModel = function(){
             },
             success: function(data){
                 pvnodes = data;
+                console.log("loaded")
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("pv_loaded");
             }
