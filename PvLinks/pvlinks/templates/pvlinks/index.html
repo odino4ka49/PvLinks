@@ -11,17 +11,24 @@
     <script type="text/javascript" src="/static/pvlinks/js/PvLists.js"></script>
     <script type="text/javascript" src="/static/pvlinks/js/myList.js"></script>
     <script type="text/javascript" src="/static/pvlinks/js/PvModel.js"></script>
-    <link href="/static/pvlinks/css/clusterize.css" rel="stylesheet">
     <script src="/static/pvlinks/js/clusterize.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <link href="/static/pvlinks/css/clusterize.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/pvlinks/css/pv.css" >
+    <link href="/static/pvlinks/css/buttons.css" rel="stylesheet">
 </head>
 <body>
     <div id="navigation">
-        <input type="button" value="pc">
-        <input type="button" value="ioc">
-        <input type="button" value="pv">
+        <!--input type="button" value="pc" class="BUTTON_AWF">
+        <input type="button" value="ioc" class="BUTTON_AWF">
+        <input type="button" value="pv" class="BUTTON_AWF"-->
+        <ul class="button-group">
+            <li><button class="large green button" value="pc">PC</button></li>
+            <li><button class="large green button" value="ioc">IOC</button></li>
+            <li><button class="large green button" value="pv">PV</button></li>
+        </ul>
     </div>
+    <br/>
     <div id="pclist" class="hidden inline">
         <input type="text" class="fuzzy-search"/>
         <ul class="list"></ul>

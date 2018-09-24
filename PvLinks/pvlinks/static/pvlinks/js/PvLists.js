@@ -4,7 +4,7 @@ PVLINKS.PvLists = function(model,body){
         iocnodes,
         pvnodes,
         pvnodes2,
-        pvbutton = $( 'input[type="button"][value="pv"]' )
+        pvbutton = $( 'button[value="pv"]' )
         lists = {};
 
     function selectPv(pv_id){
@@ -13,7 +13,7 @@ PVLINKS.PvLists = function(model,body){
         hideList(["ioclist","pclist","iocpvlist"]);
         if(! pvbutton.hasClass("highlight")){
             $("#pvlist").removeClass("hidden");
-            pvbutton.siblings().removeClass("highlight");
+            $('button').removeClass("highlight");
             pvbutton.addClass("highlight");
         }
         if(lists["pv2"]){
@@ -71,11 +71,11 @@ PVLINKS.PvLists = function(model,body){
     };
 
     function initMenu(){
-        $('input').click(function(){
-            $(this).siblings().removeClass("highlight");
+        $('button').click(function(){
+            $('button').removeClass("highlight");
             $(this).addClass("highlight");
         });
-        $('input[type="button"][value="ioc"]').click( function() {
+        $('button[value="ioc"]').click( function() {
             hideList(["pvlist","pclist","pv2list"]);
             showList(["ioclist","iocpvlist"]);
             model.loadIocNodes();
@@ -85,7 +85,7 @@ PVLINKS.PvLists = function(model,body){
             showList(["pvlist","pv2list"]);
             model.loadAllPvNodes();
         });
-        $('input[type="button"][value="pc"]').click( function() {
+        $('button[value="pc"]').click( function() {
             hideList(["ioclist","pvlist","pv2list","iocpvlist"]);
         });
     };

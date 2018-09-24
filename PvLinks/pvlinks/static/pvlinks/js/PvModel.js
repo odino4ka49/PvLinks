@@ -84,7 +84,6 @@ PVLINKS.PvModel = function(){
             },
             success: function(data){
                 nodelist["pv"] = data;
-                console.log("loaded")
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("pv_loaded");
             }
@@ -103,7 +102,6 @@ PVLINKS.PvModel = function(){
             },
             success: function(data){
                 nodelist["iocpv"] = data;
-                console.log(data);
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("iocpv_loaded");
             }

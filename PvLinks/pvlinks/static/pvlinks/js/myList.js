@@ -77,7 +77,6 @@ PVLINKS.myList = function(model,div,listname,additionalFunction){
 
 
     function setInput(text){
-        console.log(text)
         $(searchline).val(text);
         checkInput();
     }
@@ -90,7 +89,7 @@ PVLINKS.myList = function(model,div,listname,additionalFunction){
 
 
     function clear(){
-        showdata = [];
+        showdata = [{"id":"loading..."}];
         updateClusterList(dataToLi(showdata));
     }
 
