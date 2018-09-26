@@ -23,7 +23,6 @@ def getAllPv(request):
     nodes = getDataFile("nodes.json")
     list = [elem for elem in nodes if elem["type"]=="pv"]
     lastreq = getLastRequest("pv")
-    print threading.active_count()
     return HttpResponse(json.dumps({"list":list,"lastreq":lastreq}, ensure_ascii=False), content_type="application/json")
 
 def getIoc(request):
