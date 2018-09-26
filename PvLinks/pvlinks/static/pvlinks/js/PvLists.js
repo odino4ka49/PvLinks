@@ -17,7 +17,7 @@ PVLINKS.PvLists = function(model,body){
             pvbutton.addClass("highlight");
         }
         if(lists["pv2"]){
-            lists["pv2"].clear();
+            lists["pv2"].clear("loading...");
         }
     };
 
@@ -28,15 +28,17 @@ PVLINKS.PvLists = function(model,body){
                 model.loadPvByIoc(ioc_id);
             }
             else {
-                lists["pvlist2"].clear();
+                lists["pv2"].clear("loading...");
             }
         }
         else if(listname == "pv"){
             if($(target).hasClass("selected")){
                 var pv_id = $(target).text();
                 model.loadPvByPv(pv_id);
+                showPvInfo(pv_id);
             }
             else {
+                hidePvInfo();
                 if(lists["pv2"]){
                     lists["pv2"].clear();
                 }
@@ -57,6 +59,25 @@ PVLINKS.PvLists = function(model,body){
         }
     };
 
+    function showPvInfo(pv_id){
+        $("#pvinfo").children("ul").empty();
+        showList(["pvinfo"]);
+        var pvinfolist = $("#pvinfo").children("ul");
+        var pv = lists["pv"].getNode(pv_id);
+        for(key in pv){
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(upperFirst(key)+": "+pv[key]));
+            pvinfolist.append(li);
+        }
+    };
+
+    function upperFirst(text){
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    function hidePvInfo(pv_id){
+        hideList(["pvinfo"]);
+    };
 
     function hideList(list){
         list.forEach(function(listname){

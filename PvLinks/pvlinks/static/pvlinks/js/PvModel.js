@@ -4,6 +4,7 @@ PVLINKS.PvModel = function(){
         nodes,
         links,
         nodelist = {},
+        lastreq = {},
 
 
         getNodes = function(listname){
@@ -36,6 +37,14 @@ PVLINKS.PvModel = function(){
                 }
             });
             return pvnames;
+        },
+
+        getLastReq = function(listname){
+            var result = undefined;
+            if(listname in lastreq){
+                result = lastreq[listname];
+            }
+            return result;
         };
 
     function loadAllData(){
@@ -66,7 +75,8 @@ PVLINKS.PvModel = function(){
                 $(document).trigger("error_message",thrownError);
             },
             success: function(data){
-                nodelist["ioc"] = data;
+                nodelist["ioc"] = data["list"];
+                lastreq["ioc"] = data["lastreq"];
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("ioc_loaded");
             }
@@ -83,7 +93,8 @@ PVLINKS.PvModel = function(){
                 $(document).trigger("error_message",thrownError);
             },
             success: function(data){
-                nodelist["pv"] = data;
+                nodelist["pv"] = data["list"];
+                lastreq["pv"] = data["lastreq"];
                 $(document).trigger("unset_loading_cursor");
                 $(document).trigger("pv_loaded");
             }
@@ -154,6 +165,7 @@ PVLINKS.PvModel = function(){
         getIocInfo: getIocInfo,
         getNodes: getNodes,
         getConnectedPv: getConnectedPv,
-	    getPvFromIoc: getPvFromIoc
+	    getPvFromIoc: getPvFromIoc,
+	    getLastReq: getLastReq
     };
 }

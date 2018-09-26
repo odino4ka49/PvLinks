@@ -5,9 +5,22 @@
 }
 
 div div ul li {
-    padding: 10px 7px;
+    font-family:sans-serif;
+    padding: 10px;
     list-style: none;
     margin-left: -40px;
+}
+
+#pvinfo ul li {
+    font-family:sans-serif;
+    padding: 10px 30px;
+    list-style: none;
+    margin-left: -40px;
+}
+
+#pvinfo {
+#pvinfo {
+    position: absolute;
 }
 
 /*li h3{
@@ -81,6 +94,7 @@ input {
     border-radius: 5px;
     outline: none;
     margin: 10px;
+    width: 80%;
 }
 
 svg{

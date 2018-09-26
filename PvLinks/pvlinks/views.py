@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse
 from django.template import RequestContext, loader
-import os, json
+import os, json, threading
 
 
 def index(request):
@@ -22,12 +22,15 @@ def getAllData(request):
 def getAllPv(request):
     nodes = getDataFile("nodes.json")
     list = [elem for elem in nodes if elem["type"]=="pv"]
-    return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
+    lastreq = getLastRequest("pv")
+    print threading.active_count()
+    return HttpResponse(json.dumps({"list":list,"lastreq":lastreq}, ensure_ascii=False), content_type="application/json")
 
 def getIoc(request):
     nodes = getDataFile("nodes.json")
     list = [elem for elem in nodes if elem["type"]=="ioc"]
-    return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
+    lastreq = getLastRequest("ioc")
+    return HttpResponse(json.dumps({"list":list,"lastreq":lastreq}, ensure_ascii=False), content_type="application/json")
 
 def getPvByPv(request):
     try:
@@ -43,6 +46,7 @@ def getPvByPv(request):
                 elif elem["target"] == pv_name:
                     pv_names.append(elem["source"])
         list = [elem for elem in nodes if elem["type"]=="pv" and elem["id"] in pv_names]
+        threading.Thread(target=logRequest("pv",pv_name)).start()
     except Exception as e:
         print e
     return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
@@ -55,6 +59,7 @@ def getPvByIoc(request):
         links = getDataFile("links.json")
         pv_names = [elem['target'] for elem in links if elem["type"]=="has" and elem["source"]==ioc_name]
         list = [elem for elem in nodes if elem["type"]=="pv" and elem["id"] in pv_names]
+        threading.Thread(target=logRequest("ioc",ioc_name)).start()
     except Exception as e:
         print e
     return HttpResponse(json.dumps(list, ensure_ascii=False), content_type="application/json")
@@ -92,8 +97,18 @@ def getInfoIoc(request):
         result["ioc"].append(next(n for n in nodes if n["id"] == elem))
     return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
 
-
 def getDataFile(name):
     with open(os.path.dirname(os.path.abspath(__file__))+'/data/'+name) as data_file:
         data = json.load(data_file)
     return data
+
+def logRequest(filename,name):
+    with open(os.path.dirname(os.path.abspath(__file__))+'/data/'+filename+"_log", 'a+') as f:
+        f.write(name + '\n')
+
+def getLastRequest(filename):
+    lastreq = []
+    with open(os.path.dirname(os.path.abspath(__file__))+'/data/'+filename+"_log", 'r') as f:
+        lines = f.read().splitlines()
+        lastreq = lines[-5:]
+    return lastreq
