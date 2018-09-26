@@ -108,7 +108,7 @@ def logRequest(filename,name):
 
 def getLastRequest(filename):
     lastreq = []
-    with open(os.path.dirname(os.path.abspath(__file__))+'/data/'+filename+"_log", 'r') as f:
+    with open(os.path.dirname(os.path.abspath(__file__))+'/data/'+filename+"_log", 'r+') as f:
         lines = f.read().splitlines()
         lastreq = lines[-5:]
     return lastreq
