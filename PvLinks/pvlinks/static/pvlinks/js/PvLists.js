@@ -97,17 +97,17 @@ PVLINKS.PvLists = function(model,body){
             $(this).addClass("highlight");
         });
         $('button[value="ioc"]').click( function() {
-            hideList(["pvlist","pclist","pv2list"]);
+            hideList(["pvlist","pclist","pv2list","pvinfo"]);
             showList(["ioclist","iocpvlist"]);
             model.loadIocNodes();
         });
         pvbutton.click( function() {
             hideList(["ioclist","pclist","iocpvlist"]);
-            showList(["pvlist","pv2list"]);
+            showList(["pvlist","pv2list","pvinfo"]);
             model.loadAllPvNodes();
         });
         $('button[value="pc"]').click( function() {
-            hideList(["ioclist","pvlist","pv2list","iocpvlist"]);
+            hideList(["ioclist","pvlist","pv2list","iocpvlist","pvinfo"]);
         });
     };
 

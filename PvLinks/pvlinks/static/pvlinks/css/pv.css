@@ -20,6 +20,8 @@ div div ul li {
 
 #pvinfo {
     position: absolute;
+    min-width: 193px;
+    min-height: 57px;
 }
 
 /*li h3{

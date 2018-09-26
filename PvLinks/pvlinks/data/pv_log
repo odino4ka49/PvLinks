@@ -53,3 +53,13 @@ VEPP4:NRP6:scan_sep_to_max-Sim
 VEPP4:SEP4:X0-RB
 VEPP4:NRP7:scan_fine_to_max-Sim
 VEPP4:SRP5:g0_button2-SP
+VEPP4:NEP3:cross2_ref_min-RB
+VEPP4:NEP3:cross2_ref_min-RB
+VEPP4:NEP3:cross2_ref_min-Sim
+VEPP4:NEP0:GeodX0-RB
+VEPP4:NEP4:X0-RB
+VEPP4:NEP0:X0-RB
+VEPP4:NEP0:GeodX0-RB
+VEPP4:NEP0:Simulation
+VEPP4:NEP0:Simulation
+VEPP4:NEP0:GeodX0-RB
