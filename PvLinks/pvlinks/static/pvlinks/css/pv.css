@@ -18,8 +18,11 @@ div div ul li {
     margin-left: -40px;
 }
 
+#pvinfo ul{
+    margin: 0px;
+}
+
 #pvinfo {
-    position: absolute;
     min-width: 193px;
     min-height: 57px;
 }

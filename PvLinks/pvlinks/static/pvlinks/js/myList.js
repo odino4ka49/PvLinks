@@ -1,28 +1,27 @@
 PVLINKS.namespace("PVLINKS.myList");
-class myStack {
-    constructor(startdata)
-    {
-        if(startdata){
-            this.items = startdata;
-            this.disabled = false;
-        }
-        else{
-            this.disabled = true;
+
+function myStack(startdata)
+{
+    if(startdata){
+        this.items = startdata;
+        this.disabled = false;
+    }
+    else{
+        this.disabled = true;
+    }
+}
+myStack.prototype.push = function(element)
+{
+    if(!this.disabled){
+        this.items.push(element);
+        if(this.items.length>5){
+            this.items.shift();
         }
     }
-    push(element)
-    {
-        if(!this.disabled){
-            this.items.push(element);
-            if(this.items.length>5){
-                this.items.shift();
-            }
-        }
-    }
-    getData(){
-        return this.items;
-    }
-};
+}
+myStack.prototype.getData = function(){
+    return this.items;
+}
 
 PVLINKS.myList = function(model,div,listname,additionalFunction){
     var model = model,
